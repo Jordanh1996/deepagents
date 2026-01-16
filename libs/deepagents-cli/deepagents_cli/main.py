@@ -232,6 +232,7 @@ async def run_textual_cli_async(
         if mcp_config_path:
             try:
                 from deepagents_cli.mcp_tools import get_mcp_tools
+
                 mcp_tools, mcp_client = await get_mcp_tools(mcp_config_path)
                 tools.extend(mcp_tools)
                 console.print(f"[green]✓ Loaded {len(mcp_tools)} MCP tools[/green]")
@@ -290,9 +291,9 @@ async def run_textual_cli_async(
             # Clean up MCP client if initialized
             # Note: MultiServerMCPClient uses get_tools() which creates sessions per tool call
             # No explicit cleanup needed as sessions are closed automatically
-            if 'mcp_client' in locals() and mcp_client is not None:
+            if "mcp_client" in locals() and mcp_client is not None:
                 with contextlib.suppress(Exception):
-                    if hasattr(mcp_client, 'cleanup'):
+                    if hasattr(mcp_client, "cleanup"):
                         await mcp_client.cleanup()
 
             # Clean up sandbox if we created one
